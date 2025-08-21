@@ -1,0 +1,86 @@
+<p>
+    <video id="player" width="400" height="300" controls="" style="background:black;">
+    </video>
+    <br>
+    <div id="video-info"></div>
+    <br>
+    <select id="video-selector"></select>
+    <br>
+    <script>
+        var player = document.getElementById('player');
+        var videoInfo = document.getElementById('video-info');
+        var videoSelector = document.getElementById('video-selector');
+        var string1 = "https://github.com/jash-git/PAPAYA-_N8N-EP1-EP3/raw/main/";
+        var string2 = "?raw=true";
+        var playlist = [
+			"part_01/part0000.mp4",
+			"part_01/part0001.mp4",
+			"part_01/part0002.mp4",
+			"part_01/part0003.mp4",
+			"part_01/part0004.mp4",
+			"part_01/part0005.mp4",
+			"part_01/part0006.mp4",
+			"part_01/part0007.mp4",
+			"part_01/part0008.mp4",
+			"part_01/part0009.mp4",
+			"part_01/part0010.mp4",
+			"part_02/part0000.mp4",
+			"part_02/part0001.mp4",
+			"part_02/part0002.mp4",
+			"part_02/part0003.mp4",
+			"part_02/part0004.mp4",
+			"part_02/part0005.mp4",
+			"part_02/part0006.mp4",
+			"part_02/part0007.mp4",
+			"part_02/part0008.mp4",
+			"part_02/part0009.mp4",
+			"part_02/part0010.mp4",
+			"part_02/part0011.mp4",
+			"part_02/part0012.mp4",
+			"part_02/part0013.mp4",
+			"part_03/part0000.mp4",
+			"part_03/part0001.mp4",
+			"part_03/part0002.mp4",
+			"part_03/part0003.mp4",
+			"part_03/part0004.mp4",
+			"part_03/part0005.mp4",
+			"part_03/part0006.mp4",			
+        ];
+        var activeVideo = 0;
+
+        function updateVideoInfo() {
+            videoInfo.innerText = "目前播放第 " + (activeVideo + 1) + " 個影片，共 " + playlist.length + " 個影片";
+        }
+
+        function setVideoSource() {
+            var fileurl = string1 + playlist[activeVideo] + string2;
+            player.src = fileurl;
+            updateVideoInfo();
+        }
+
+        function populateVideoSelector() {
+            playlist.forEach((video, index) => {
+                var option = document.createElement('option');
+                option.value = index;
+                option.text = "影片 " + (index + 1);
+                videoSelector.appendChild(option);
+            });
+        }
+
+        player.addEventListener('ended', function(e) {
+            activeVideo = (++activeVideo) % playlist.length;
+            setVideoSource();
+            player.play();
+        });
+
+        videoSelector.addEventListener('change', function(e) {
+            activeVideo = parseInt(videoSelector.value);
+            setVideoSource();
+            player.play();
+        });
+
+        populateVideoSelector();
+        setVideoSource();
+    </script>
+    <br>
+</p>
